@@ -1,0 +1,4 @@
+pythonic_db_manipulation.egg-info/*
+pythonic_db_manipulation.egg-info
+__pycache__/*
+__pycache__
