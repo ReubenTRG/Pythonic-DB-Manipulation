@@ -19,10 +19,7 @@ class Table:
 		return string
 	
 	def push(self, row: list):
-		if len(row) != self.sizeofcolumns:
-			raise Exception("Different size")
-		else:
-			self.rows.append(row)
+		self.rows.append(row)
 	
 	def pop(self, index=-1):
 		return self.rows.pop(index)
