@@ -1,12 +1,11 @@
 
 class Table:
-	rows = list()
-	sizeofcolumns = 0
+	rows: list[list] = list()
+	columns: list = list()
 
 	def __init__(self, name="", columns=[]):
 		self.name = name
 		self.columns = columns
-		self.sizeofcolumns = len(columns)
 
 	def __str__(self):
 		string  = f"Name: {self.name}\nTable:\n"
@@ -36,42 +35,58 @@ class Table:
 		self.name = name
 	
 	# Row commands
-	def get_row(self, index):
-		return self.rows[index]
-
 	def get_rows(self):
 		return self.rows
 	
 	def set_row(self, index, row):
 		self.rows[index] = row
 	
-	def set_rows(self, rows):
-		self.rows = rows
+	def row_exists(self, row):
+		return row in self.rows
+
+	def remove(self, row):
+		self.rows.remove(row)
+
+	def __getitem__(self, index: int):
+		return self.rows[index]
+
+	def __setitem__(self, index, row):
+		self.rows[index] = row
+
+	def __del__(self):
+		self.rows = []
+
+	def __delitem__(self, index):
+		del self.rows[index]
 	
+	def __len__(self):
+		return len(self.rows)
+
+	def __iter__(self):
+		return iter(self.rows)
+
 	# Column commands
-	def get_column(self, index):
-		return self.columns[index]
-	
 	def get_columns(self):
 		return self.columns
 
 	def set_column(self, index, column):
 		self.columns[index] = column
 
-	def set_columns(self, columns):
-		self.columns = columns
-
-	# Size commands
-	def get_sizeofcolumns(self):
-		return self.sizeofcolumns
+	def column_exists(self, column):
+		return column in self.columns
 
 	# Table commands
-	def union(self, table: Table):
-		for i in table.rows:
-			if i not in self.rows:
-				self.rows.append(i)
+	def union(self, table: "Table"):
+		result = Table()
+		result.columns = self.columns.copy() + list(set(table.columns) - set(self.columns))
+		
 	
-	def intersection(self, table):
+	def intersection(self, table: "Table"):
+		for i in table.rows:
+			if i in self.rows:
+				self.rows.remove(i)
+	
+	def difference(self, table: "Table"):
 		for i in table.rows:
 			if i in self.rows:
 				self.rows.remove(i)
