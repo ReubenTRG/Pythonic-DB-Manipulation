@@ -1,25 +1,19 @@
 from pythonic_db_manipulation import Table
 
-tb = Table("test", ["id", "name", "age"])
+tb1 = Table("A", ["id", "name"])
+tb1.push([1, "Alice"])
+tb1.push([2, "Bob"])
+tb1.push([3, "Sam"])
 
-print(tb)
+print(tb1.pop())
 
-tb.push([1, "John", 25])
-tb.push([2, "Jane", 30])
-tb.push([3, "Lucy", 12])
-tb.push([4, "Marco", 56])
-tb.push([5, "Mario", 16])
-tb.push([6, "Luiji", 42])
+print(tb1)
 
-print(tb)
+tb2 = Table("B", ["id", "name"])
+tb2.push([2, "Bob"])
+tb2.push([3, "Charlie"])
 
-tb.pop()
+print(tb1 + tb2)  # Union
+print(tb1 & tb2)  # Intersection
+print(tb1 - tb2)  # Difference
 
-print(tb)
-
-tb.pop(1)
-
-print(tb)
-
-print(tb.get())
-print(tb.get(1))
